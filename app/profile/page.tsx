@@ -1,8 +1,6 @@
 import React from 'react'
 import { auth } from '@/auth'
-import BookingHistory from '@/app/components/BookingHistory'
 import UserProfile from "@/app/components/UserProfile";
-import { Ship } from 'lucide-react'
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { GiPirateHat } from "react-icons/gi";
@@ -27,7 +25,7 @@ export default async function Profile () {
 
       {/* Profile Sections */}
 
-      <UserProfile user_email={ user.email}/>
+      <UserProfile user_email={user?.email ?? ''} />
 
       
     </div>
