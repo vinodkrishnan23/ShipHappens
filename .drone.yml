@@ -11,7 +11,7 @@ steps:
 - name: setup-helm-ksec
   image: alpine:latest
   commands:
-    - apk add --no-cache bash curl git
+    - apk add --no-cache bash curl git openssl
     - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
     - helm plugin install https://github.com/ksense/helm-ksec
     - helm ksec pull sa-apac-ind-blr .env.local
