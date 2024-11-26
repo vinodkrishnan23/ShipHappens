@@ -22,6 +22,7 @@ steps:
     - helm plugin install https://github.com/kanopy-platform/ksec
     - ls /root/.local/share/helm/plugins/ksec/
     - ls /root/.local/share/helm/plugins
+    - export PATH=$PATH:/root/.local/share/helm/plugins/ksec
     - which ksec
     - helm ksec ls
     - helm ksec pull sa-apac-ind-blr .env.local
