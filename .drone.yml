@@ -19,8 +19,10 @@ steps:
       from_secret: AUTH_GOOGLE_SECRET
     MONGODB_URI:
       from_secret: MONGODB_URI
-    NEXTAUTH_URL:
-      from_secret: NEXTAUTH_URL
+    AUTH_URL:
+      from_secret: AUTH_URL
+    AUTH_TRUST_HOST:
+      from_secret: AUTH_URL
   commands:
     - echo "AUTH_SECRET=$AUTH_SECRET"
     - echo "AUTH_SECRET=$AUTH_SECRET" >> .env.production
