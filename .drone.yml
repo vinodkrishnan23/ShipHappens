@@ -12,7 +12,9 @@ steps:
   image: alpine:latest
   commands:
     - apk add --no-cache bash curl git openssl
-    - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+    - curl  -LO  "https://get.helm.sh/helm-v3.9.4-darwin-amd64.tar.gz"
+    - curl  -LO  "https://get.helm.sh/helm-v3.9.4-darwin-amd64.tar.gz.sha256sum"
+    - shasum  -a  256  --check  helm-v3.9.4-darwin-amd64.tar.gz.sha256sum
     - helm plugin install https://github.com/kanopy-platform/ksec
     - which ksec
     - helm ksec ls
