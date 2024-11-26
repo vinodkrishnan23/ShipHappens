@@ -17,6 +17,7 @@ steps:
     - ls -l
     - tar  -zxvf  helm-v3.9.4-darwin-amd64.tar.gz
     - chmod  +x  ./darwin-arm64/helm
+    - ls -l
     - sudo mv ./darwin-arm64/helm  /usr/local/bin/helm
     - helm plugin install https://github.com/kanopy-platform/ksec
     - which ksec
