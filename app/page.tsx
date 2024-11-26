@@ -7,7 +7,7 @@ import { GiPirateHat } from "react-icons/gi";
 import { GiPirateCaptain } from "react-icons/gi";
 import { Button } from "@/components/ui/button";
 import SignOut from "./components/SignOut";
-import MyProfile from "./components/MyProfile";
+import Mycard from "./components/MyCard";
 
 export default async function Home() {
   const session = await auth();
@@ -20,7 +20,7 @@ export default async function Home() {
       <GiPirateHat size={30}/>
       Ship Happens !!!
     </h1>
-    <MyProfile user_name = { user.name }/>
+    <Mycard user_name = { user.name }/>
   </header>
   </div>
 ): (<div className="flex flex-col justify-center text-center gap-6 max-w-5xl mx-auto items-center h-screen">
