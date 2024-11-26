@@ -24,14 +24,6 @@ export default function UserProfile({ user_email }: { user_email: string }) {
     setProfile((prevProfile) => ({
       ...prevProfile,
       [name]: value,
-      email: prevProfile?.email || '',
-      phone: prevProfile?.phone || '',
-      address: prevProfile?.address || '',
-      dob: prevProfile?.dob || '',
-      gender: prevProfile?.gender || '',
-      created_at: prevProfile?.created_at || '',
-      updated_at: prevProfile?.updated_at || '',
-      full_name: prevProfile?.full_name || '',
     }));
   };
 
