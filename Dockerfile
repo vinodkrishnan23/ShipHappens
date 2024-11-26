@@ -1,6 +1,11 @@
 # Use Node.js 18
 FROM node:23-alpine AS builder
 
+# Install Helm and Helm Secrets
+RUN apk add --no-cache bash curl && \
+    curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
+    helm plugin install https://github.com/jkroepke/helm-secrets
+
 # Set working directory
 WORKDIR /app
 
@@ -10,6 +15,10 @@ RUN npm install --legacy-peer-deps
 
 # Copy source code
 COPY . .
+
+# Decrypt the Helm secrets and generate .env.local
+RUN helm secrets dec ./environments/staging.yaml && \
+    node scripts/generate-env.js
 
 # Build the application
 RUN npm run build
