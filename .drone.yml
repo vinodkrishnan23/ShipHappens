@@ -11,8 +11,10 @@ steps:
 - name: setup-helm-ksec
   image: alpine:latest
   commands:
-    - apk add --no-cache bash curl git openssl perl
-    - curl  -LO  "https://get.helm.sh/helm-v3.9.4-darwin-amd64.tar.gz"
+    - apk add --no-cache bash curl git openssl perl coreutils
+    - curl -LO "https://get.helm.sh/helm-v3.9.4-darwin-amd64.tar.gz"
+    - curl -LO "https://get.helm.sh/helm-v3.9.4-darwin-amd64.tar.gz.sha256sum"
+    - sha256sum --check helm-v3.9.4-darwin-amd64.tar.gz.sha256sum
     - tar -zxvf helm-v3.9.4-darwin-amd64.tar.gz
     - chmod +x ./darwin-amd64/helm
     - ls -l
