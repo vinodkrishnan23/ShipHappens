@@ -20,6 +20,7 @@ steps:
     MONGODB_URI:
       from_secret: MONGODB_URI
   commands:
+    - echo $MONGODB_URI
     - echo "AUTH_SECRET=${AUTH_SECRET}" > .env.local
     - echo "AUTH_GOOGLE_ID=${AUTH_GOOGLE_ID}" > .env.local
     - echo "AUTH_GOOGLE_SECRET=${AUTH_GOOGLE_SECRET}" > .env.local
