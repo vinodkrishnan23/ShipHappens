@@ -13,7 +13,7 @@ steps:
   commands:
     - apk add --no-cache bash curl git openssl
     - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-    - helm plugin install https://github.com/ksense/helm-ksec
+    - helm plugin install https://github.com/kanopy-platform/ksec
     - helm ksec pull sa-apac-ind-blr .env.local
   when:
     event:
