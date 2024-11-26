@@ -27,7 +27,7 @@ steps:
     - echo "AUTH_GOOGLE_ID=$AUTH_GOOGLE_ID" >> .env.production
     - echo "AUTH_GOOGLE_SECRET=$AUTH_GOOGLE_SECRET" >> .env.production
     - echo "MONGODB_URI=$MONGODB_URI" >> .env.production
-    - echo "NEXTAUTH_URL=$NEXTAUTH_URL" >> .env.production
+    - echo "AUTH_URL=$AUTH_URL" >> .env.production
     - cat .env.production
     - ls
   when:
