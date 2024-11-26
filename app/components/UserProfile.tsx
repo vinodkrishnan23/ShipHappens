@@ -3,10 +3,18 @@
 import { useEffect, useState } from "react";
   
 
+interface Address {
+    street: string;
+    city: string;
+    state: string;
+    postal_code: string;
+    country: string;
+}
+
 interface Profile {
     email: string;
     phone: string;
-    address: string;
+    address: Address;
     dob: string;
     gender: string;
     created_at: string;
@@ -15,16 +23,41 @@ interface Profile {
 }
 
 export default function UserProfile({ user_email }: { user_email: string }) {
-  const [profile, setProfile] = useState<Profile>();
+  const [profile, setProfile] = useState<Profile>({
+    email: '',
+    phone: '',
+    address: {
+      street: '',
+      city: '',
+      state: '',
+      postal_code: '',
+      country: ''
+    },
+    dob: '',
+    gender: '',
+    created_at: '',
+    updated_at: '',
+    full_name: '',
+  });
   const [isEditing, setIsEditing] = useState(false);
 
   // Function to handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setProfile((prevProfile) => ({
-      ...prevProfile,
-      [name]: value,
-    }));
+    if (name in profile?.address) {
+        setProfile((prevProfile) => ({
+            ...prevProfile,
+            address: {
+                ...prevProfile?.address,
+                [name]: value,
+            },
+        }));
+    } else {
+        setProfile((prevProfile) => ({
+            ...prevProfile,
+            [name]: value,
+        }));
+    }
   };
 
   // Function to toggle edit mode
@@ -63,7 +96,7 @@ export default function UserProfile({ user_email }: { user_email: string }) {
       const data = await res.json();
       console.log("I am here in User Profile");
       console.log(data);
-      setProfile(data.profile_info);
+      setProfile(data.profile_info || profile);
     }
     fetchProfile();
   }, [user_email]);
@@ -136,16 +169,55 @@ export default function UserProfile({ user_email }: { user_email: string }) {
           )}
         </div>
         <div className="flex justify-between py-1">
-          <span className="font-semibold">Address</span>
+          <span className="font-semibold">Street</span>
           {isEditing ? (
             <input
               type="text"
-              name="address"
-              value={profile?.address || ''}
+              name="street"
+              value={profile?.address.street || ''}
               onChange={handleChange}
             />
           ) : (
-            <span>{profile?.address || 'N/A'}</span>
+            <span>{profile?.address.street || 'N/A'}</span>
+          )}
+        </div>
+        <div className="flex justify-between py-1">
+          <span className="font-semibold">City</span>
+          {isEditing ? (
+            <input
+              type="text"
+              name="city"
+              value={profile?.address.city || ''}
+              onChange={handleChange}
+            />
+          ) : (
+            <span>{profile?.address.city || 'N/A'}</span>
+          )}
+        </div>
+        <div className="flex justify-between py-1">
+          <span className="font-semibold">State</span>
+          {isEditing ? (
+            <input
+              type="text"
+              name="state"
+              value={profile?.address.state || ''}
+              onChange={handleChange}
+            />
+          ) : (
+            <span>{profile?.address.state || 'N/A'}</span>
+          )}
+        </div>
+        <div className="flex justify-between py-1">
+          <span className="font-semibold">Zip</span>
+          {isEditing ? (
+            <input
+              type="text"
+              name="zip"
+              value={profile?.address.postal_code || ''}
+              onChange={handleChange}
+            />
+          ) : (
+            <span>{profile?.address.postal_code || 'N/A'}</span>
           )}
         </div>
       </section>
