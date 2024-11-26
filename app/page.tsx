@@ -1,12 +1,6 @@
-import BookingHistory from "./components/BookingHistory";
-import SearchRoutes from "./components/SearchRoutes";
 import SignIn from "./components/SignIn";
 import {auth} from "@/auth";
-import { Ship } from 'lucide-react';
 import { GiPirateHat } from "react-icons/gi";
-import { GiPirateCaptain } from "react-icons/gi";
-import { Button } from "@/components/ui/button";
-import SignOut from "./components/SignOut";
 import Mycard from "./components/MyCard";
 import React from "react";
 import InventorySearchForm from "@/app/components/InventorySearchForm";
@@ -41,7 +35,6 @@ export default async function Home() {
       <GiPirateHat size={30}/>
       Ship Happens !!!
     </h1>
-
     <SignIn></SignIn>
     </div>
   );

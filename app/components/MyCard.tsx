@@ -3,8 +3,6 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 
@@ -22,7 +20,10 @@ const Mycard = ({ user_name }: { user_name: string }) => {
   <DropdownMenuContent>
     <DropdownMenuItem>
         <Link href="/bookings">My Bookings</Link>
-        </DropdownMenuItem>
+    </DropdownMenuItem>
+    <DropdownMenuItem>
+        <Link href="/profile">My Profile</Link>
+    </DropdownMenuItem>
         <DropdownMenuItem>
             <SignOut></SignOut>
         </DropdownMenuItem>

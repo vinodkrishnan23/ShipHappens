@@ -6,7 +6,7 @@ export default function SearchRoutes({ userId }: { userId: string }) {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [date, setDate] = useState("");
-  const [routes, setRoutes] = useState([]);
+  const [routes, setRoutes] = useState<{ _id: string; sourcePort: string; destinationPort: string; availableContainers: number; }[]>([]);
 
   const searchRoutes = async () => {
     const res = await fetch(`/api/search?source=${source}&destination=${destination}&date=${date}`);

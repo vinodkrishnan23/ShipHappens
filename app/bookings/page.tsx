@@ -1,7 +1,6 @@
 import React from 'react'
 import { auth } from '@/auth'
 import BookingHistory from '@/app/components/BookingHistory'
-import { Ship } from 'lucide-react'
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { GiPirateHat } from "react-icons/gi";
@@ -24,7 +23,7 @@ export default async function Profile () {
         </Button>
   </header>
   <h1 className="text-xl font-bold flex">My Bookings</h1>
-        <BookingHistory user_email={ user.email}/>
+        <BookingHistory user_email={user?.email ?? ''} />
     </div>
   )
 }
