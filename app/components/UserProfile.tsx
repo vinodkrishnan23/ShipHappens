@@ -54,40 +54,32 @@ export default function UserProfile({ user_email }: { user_email: string }) {
 
   return (
     <div>
-       <section className="bg-white p-6 rounded shadow-md">
-        <div className="flex justify-between border-b py-2">
+       <section className="bg-white p-6 pt-8 rounded shadow-md mx-64 mt-16">
+        <div className="flex justify-between border-b py-1">
           <span className="font-semibold">Full Name</span>
           <span>{profile?.full_name || 'N/A'}</span>
         </div>
-        <div className="flex justify-between border-b py-2">
+        <div className="flex justify-between border-b py-1">
           <span className="font-semibold">Email</span>
           <span>{profile?.email || 'N/A'}</span>
         </div>
-        <div className="flex justify-between border-b py-2">
+        <div className="flex justify-between border-b py-1">
           <span className="font-semibold">Phone</span>
           <span>{profile?.phone || 'N/A'}</span>
         </div>
-        <div className="flex justify-between border-b py-2">
+        <div className="flex justify-between border-b py-1">
           <span className="font-semibold">DOB</span>
           <span>{profile?.dob || 'N/A'}</span>
         </div>
-        <div className="flex justify-between border-b py-2">
+        <div className="flex justify-between border-b py-1">
           <span className="font-semibold">Gender</span>
           <span>{profile?.gender || 'N/A'}</span>
         </div>
-        <div className="flex justify-between border-b py-2">
-          <span className="font-semibold">Created At</span>
-          <span>{profile?.created_at || 'N/A'}</span>
-        </div>
-        <div className="flex justify-between border-b py-2">
-          <span className="font-semibold">Updated At</span>
-          <span>{profile?.updated_at || 'N/A'}</span>
-        </div>
-        <div className="flex justify-between py-2">
+        
+        <div className="flex justify-between py-1">
           <span className="font-semibold">Address</span>
           <span>{profile?.address || 'N/A'}</span>
         </div>
-        
       </section> 
     </div>
   )

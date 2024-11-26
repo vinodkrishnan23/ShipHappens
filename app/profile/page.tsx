@@ -23,7 +23,7 @@ export default async function Profile () {
           <Link href="/">Back</Link>
         </Button>
       </header>
-      <h1 className="text-xl font-bold pl-4 mb-4">About</h1>
+      <h1 className="text-xl font-bold pl-4 mb-4">Profile Info</h1>
 
       {/* Profile Sections */}
 
