@@ -94,8 +94,6 @@ export default function UserProfile({ user_email }: { user_email: string }) {
     async function fetchProfile() {
       const res = await fetch("/api/profile", { headers: { user_email: user_email } });
       const data = await res.json();
-      console.log("I am here in User Profile");
-      console.log(data);
       setProfile(data.profile_info || profile);
     }
     fetchProfile();
