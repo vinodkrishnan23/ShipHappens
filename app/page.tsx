@@ -15,8 +15,19 @@ export default async function Home() {
   };
 
   return user ?
-  (
+  ( user.is_captain ? (
     <div>
+      <header className="flex justify-between items-center p-4">
+        <h1 className="text-2xl font-bold flex">
+          <GiPirateHat size={30}/>
+          Ship Happens !!!
+        </h1>
+      </header>
+      <h2>Captain's Dashboard</h2>
+    </div>
+  )
+  :
+    (<div>
       <header className="flex justify-between items-center p-4">
         <h1 className="text-2xl font-bold flex">
           <GiPirateHat size={30}/>
@@ -26,7 +37,7 @@ export default async function Home() {
       </header>
       <InventorySearchForm />
 
-    </div>
+    </div>)
   )
   :
   (
