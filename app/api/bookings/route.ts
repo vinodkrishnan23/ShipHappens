@@ -7,7 +7,7 @@ export async function GET(req: Request) {
   if (!user_email) {
     return NextResponse.json({ error: "Missing user Email" }, { status: 400 });
   }
-  const query = { user_id : user_email };
+  const query = { userId : user_email };
   const db = await getDb();
   const options = {
     limit:10
