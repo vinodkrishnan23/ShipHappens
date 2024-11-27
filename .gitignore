@@ -30,8 +30,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # env files (can opt-in for committing if needed)
-.env_bkp
-drone_bkp*
+.env*
 
 # vercel
 .vercel
