@@ -12,9 +12,9 @@ export default async function Home() {
   console.log(session);
   const user = session?.user
 
-  const handleSearch = (source: string, destination: string, date: string) => {
-    console.log("values: "+source+" "+destination+" "+date);
-  };
+  // const handleSearch = (source: string, destination: string, date: string) => {
+  //   console.log("values: "+source+" "+destination+" "+date);
+  // };
 
   //If user is there ie logged in then enter part 1 else go to part 2
   return user ?
@@ -31,7 +31,7 @@ export default async function Home() {
         </h1>
         <SignOut></SignOut>
       </header>
-      <h2>Captain's Dashboard</h2>
+      <h2>Captain&apos;s Dashboard</h2>
     </div>
   )
   : 
