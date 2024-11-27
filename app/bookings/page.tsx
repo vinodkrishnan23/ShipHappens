@@ -7,6 +7,7 @@ import { GiPirateHat } from "react-icons/gi";
 
 export default async function Profile () {
   const session = await auth();
+  console.log("component bookings page");
   console.log(session);
   const user = session?.user
   return (

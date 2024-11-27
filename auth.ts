@@ -25,7 +25,7 @@ callbacks :{
 
     if (existingUser) {
       // Add user details to the session
-      session.user.name = existingUser.name;
+      session.user.name = existingUser.full_name;
       session.user.email = existingUser.email;
       session.user.is_captain = existingUser.is_captain; // Example of adding a custom field
       session.user._id = existingUser._id.toString(); // Convert ObjectId to string

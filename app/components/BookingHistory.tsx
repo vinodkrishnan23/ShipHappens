@@ -14,12 +14,12 @@ import {
   
 
 interface Booking {
-  booking_id: string;
-  user_id: string;
-  route_id: number;
-  ship_name: string;
-  amount_paid: number;
-  payment_status: string;
+  _id: Object;
+  bookingRoute: Object,
+  shipDetails: Object;
+  bookedContainers: number;
+  bookingAmount: number;
+  paymentStatus: string;
 }
 
 export default function BookingHistory({ user_email }: { user_email: string }) {
@@ -56,34 +56,42 @@ export default function BookingHistory({ user_email }: { user_email: string }) {
             <TableCaption>Your Bookings with us</TableCaption>
             <TableHeader>
                 <TableRow>
-                <TableHead className="p-2">Shipping ID</TableHead>
-                <TableHead className="p-2">Route ID</TableHead>
+                <TableHead className="p-2">Booking ID</TableHead>
+                <TableHead className="p-2">Source Port</TableHead>
+                <TableHead className="p-2">Destination Port</TableHead>
                 <TableHead className="p-2">Ship Name</TableHead>
+                <TableHead className="p-2">Containers Booked</TableHead>
                 <TableHead className="p-2">Payment Status</TableHead>
                 <TableHead className="p-2">Amount Paid</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
             {bookings.map((booking) => (
-                <TableRow key={booking.booking_id}>
+                <TableRow key={booking._id}>
                 <TableCell className="font-medium text-left p-2">
                     <span className="font-semibold">
-                    { booking.booking_id }
+                    { booking._id }
                         </span>
                 </TableCell>
                 <TableCell className="text-left p-2">
-                    <span>{ booking.route_id }</span>
+                    <span>{ booking.bookingRoute.srcPortName }</span>
                 </TableCell>
                 <TableCell className="text-left p-2">
-                    <span>{ booking.ship_name }</span>
+                    <span>{ booking.bookingRoute.destPortName }</span>
                 </TableCell>
                 <TableCell className="text-left p-2">
-                    <Badge className="rounded-full">
-                    { booking.payment_status }
+                    { booking.shipDetails.shipName }
+                </TableCell>
+                <TableCell className="text-left p-2">
+                    { booking.bookedContainers }
+                </TableCell>
+                <TableCell className="text-left p-2">
+                <Badge className="rounded-full">
+                    { booking.paymentStatus }
                     </Badge>
                 </TableCell>
                 <TableCell className="p-2">
-                    <span>{ booking.amount_paid }</span>
+                    <span>{ booking.bookingAmount }</span>
                 </TableCell>
                 </TableRow>))}
             </TableBody>
