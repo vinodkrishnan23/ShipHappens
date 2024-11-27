@@ -1,0 +1,8 @@
+envSecrets:
+    MONGODB_URI: sa-apac-ind-blr
+    ecr_access_key: sa-apac-ind-blr
+    ecr_secret_key: sa-apac-ind-blr
+    AUTH_SECRET: sa-apac-ind-blr
+    AUTH_GOOGLE_ID: sa-apac-ind-blr
+    AUTH_GOOGLE_SECRET: sa-apac-ind-blr
+    AUTH_URL: sa-apac-ind-blr

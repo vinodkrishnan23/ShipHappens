@@ -31,4 +31,4 @@ RUN npm install --only=production
 # Expose port and run the app
 EXPOSE 8080
 ENV PORT 8080
-CMD ["npm", "run" , "start"]
+CMD ["npm", "run" , "start", "--", "-p", "8080", "-H", "0.0.0.0"]
