@@ -254,7 +254,10 @@ export default function CustomerDetails({ user_email, full_name }: { user_email:
             type="submit"
             className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             disabled={loading}
-            onClick={() => window.location.reload()}
+            onClick={() => {
+              saveCustomerProfile(customer);
+              window.location.reload(); // Reload the page after saving
+            }}
           >
             {loading ? "Submitting..." : "Submit"}
           </button>
