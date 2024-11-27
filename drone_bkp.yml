@@ -1,0 +1,72 @@
+---
+kind: pipeline
+type: kubernetes
+name: default
+
+trigger:
+  branch:
+  - vinod
+
+steps:
+- name: setup-env-local
+  image: alpine:latest
+  environment:
+    AUTH_SECRET:
+      from_secret: AUTH_SECRET
+    AUTH_GOOGLE_ID:
+      from_secret: AUTH_GOOGLE_ID
+    AUTH_GOOGLE_SECRET:
+      from_secret: AUTH_GOOGLE_SECRET
+    MONGODB_URI:
+      from_secret: MONGODB_URI
+    AUTH_URL:
+      from_secret: AUTH_URL
+    AUTH_TRUST_HOST:
+      from_secret: AUTH_URL
+  commands:
+    - echo "AUTH_SECRET=$AUTH_SECRET"
+    - printf "%s" "$MONGODB_URI" 
+    - echo "AUTH_SECRET=$AUTH_SECRET" >> .env.production
+    - echo "AUTH_GOOGLE_ID=$AUTH_GOOGLE_ID" >> .env.production
+    - echo "AUTH_GOOGLE_SECRET=$AUTH_GOOGLE_SECRET" >> .env.production
+    - echo "MONGODB_URI=$MONGODB_URI" >> .env.production
+    - echo "AUTH_URL=$AUTH_URL" >> .env.production
+    - echo "AUTH_TRUST_HOST=$AUTH_URL" >> .env.production
+    - cat .env.production
+    - ls
+  when:
+    event:
+    - push
+
+- name: publish
+  image: plugins/kaniko-ecr
+  settings:
+    create_repository: true
+    registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
+    repo: sa-demo/${DRONE_REPO_NAME}
+    tags:
+    - git-${DRONE_COMMIT_SHA:0:7}
+    - latest
+    access_key:
+      from_secret: ecr_access_key
+    secret_key:
+      from_secret: ecr_secret_key
+  when:
+    event:
+    - push
+
+- name: deploy-staging
+  image: public.ecr.aws/kanopy/drone-helm:v3
+  settings:
+    chart: mongodb/web-app
+    chart_version: 4.25.0
+    add_repos: [mongodb=https://10gen.github.io/helm-charts]
+    namespace: sa-demo
+    release: ship-happens-sa-ind-blr
+    values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/sa-demo/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=ship-happens-sa-ind-blr.sa-demo.staging.corp.mongodb.com,mesh.enabled=true,resources.requests.memory=512Mi,resources.limits.memory=1Gi,resources.requests.cpu=500m,resources.limits.cpu=1000m
+    api_server: https://api.staging.corp.mongodb.com
+    kubernetes_token:
+      from_secret: staging_kubernetes_token
+  when:
+    event:
+    - push
