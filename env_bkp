@@ -1,6 +1,0 @@
-AUTH_SECRET="uZJOu6o11xw73NYA1JHVTDLM7mxKEKGl0alfSCSCO8Q=" # Added by `npx auth`. Read more: https://cli.authjs.dev
-AUTH_GOOGLE_ID=437119456881-cj4hqfp2gh40qukcr387c0bostkletj4.apps.googleusercontent.com
-AUTH_GOOGLE_SECRET=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
-MONGODB_URI="mongodb+srv://root:root@db-hackathon-apac-ind-b.gtocz.mongodb.net/hackathon?retryWrites=true&w=majority"
-AUTH_URL=https://ship-happens-sa-ind-blr.sa-demo.staging.corp.mongodb.com
-AUTH_TRUST_HOST=https://ship-happens-sa-ind-blr.sa-demo.staging.corp.mongodb.com
