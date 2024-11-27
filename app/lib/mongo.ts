@@ -13,3 +13,7 @@ export async function getDb() {
   console.log("Connected to DB");
   return client.db(DB_NAME);
 }
+
+export function getClient() {
+  return client;
+}
