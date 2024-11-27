@@ -5,3 +5,4 @@ envSecrets:
     AUTH_SECRET: sa-apac-ind-blr
     AUTH_GOOGLE_ID: sa-apac-ind-blr
     AUTH_GOOGLE_SECRET: sa-apac-ind-blr
+    AUTH_URL: https://ship-happens-sa-ind-blr.sa-demo.staging.corp.mongodb.com 
