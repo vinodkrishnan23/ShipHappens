@@ -5,6 +5,7 @@ import { getDb } from "@/app/lib/mongo";
 declare module "next-auth" {
   interface User {
     is_captain?: boolean;
+    _id?: string;
   }
 }
 
@@ -27,6 +28,7 @@ callbacks :{
       session.user.name = existingUser.name;
       session.user.email = existingUser.email;
       session.user.is_captain = existingUser.is_captain; // Example of adding a custom field
+      session.user._id = existingUser._id.toString(); // Convert ObjectId to string
     }
     return session; // Return the session object
   }
