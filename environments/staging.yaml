@@ -5,4 +5,3 @@ envSecrets:
     AUTH_SECRET: sa-apac-ind-blr
     AUTH_GOOGLE_ID: sa-apac-ind-blr
     AUTH_GOOGLE_SECRET: sa-apac-ind-blr
-    AUTH_URL: sa-apac-ind-blr
