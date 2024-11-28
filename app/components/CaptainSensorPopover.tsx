@@ -10,7 +10,7 @@ export default function CaptainSensorPopover({alerts}:{alerts: { sensor_data: { 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="secondary" className="background-color: green;">Resolution</Button>
+        <Button variant="secondary" className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-800 transition duration-200">Resolution</Button>
       </PopoverTrigger>
       <PopoverContent className="w-80">
         <div>
