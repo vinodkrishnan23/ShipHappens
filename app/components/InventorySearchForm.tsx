@@ -3,17 +3,41 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import shipImage from "../ship.png";
+import { ObjectId } from "mongodb";
 
 export default function InventorySearchForm ({ user_email }: { user_email: string }) {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [departure, setDeparture] = useState("");
-  const [inventoryData, setInventoryData] = useState<object[]>([]);
+  interface itemSchema {
+    _id:ObjectId;
+  container_capacity:string;
+  ship_name:string;
+  source_port_name:string;
+  source_port_code:string;
+  journey_start_date:string;
+  source_departure_time:string;
+  journey_end_date:string;
+  destination_arrival_time:string;
+  destination_port_name:string;
+  destination_port_code:string;
+  price_in_dollars:string;
+  newContainerCapacity:number;
+  bookingAmt:number;
+  bookingContainerCapacity:string;
+  user_email:string;
+  }
+  
+  const [inventoryData, setInventoryData] = useState<itemSchema[]>([]);
 
   const [sourceSuggestions, setSourceSuggestions] = useState<string[]>([]);
   const [destinationSuggestions, setDestinationSuggestions] = useState<string[]>([]);
+
+  type BookingItem = {
+    row : ObjectId | string;
+  }
   
-  const [bookingItem, setBookingItem] = useState<any>({});
+  const [bookingItem, setBookingItem] = useState<BookingItem>({ row: "" });
   const [bookingContainerCapacity, setBookingContainerCapacity] = useState("0");
 
   const [transactionComplete, setTransactionComplete] = useState(false);
@@ -113,15 +137,13 @@ export default function InventorySearchForm ({ user_email }: { user_email: strin
     console.log(inventoryData);
   };
 
-  function sleepSync(ms: number) {
-    const end = Date.now() + ms;
-    while (Date.now() < end) {
-      // Busy wait
-    }
-  };  
+  interface booking {
+    row: ObjectId | string; // Allow `row` to be either an ObjectId or a string
+}
 
-  const showBookingSection = (id : any) => {
-    let booking = {"row": ""}; 
+
+  const showBookingSection = (id : ObjectId) => {
+    let booking:booking = {"row": ""}; 
     if(bookingItem["row"] != id){
       booking = {"row" : id}
     }
@@ -130,10 +152,10 @@ export default function InventorySearchForm ({ user_email }: { user_email: strin
     console.log(booking);
   };
 
-  const completeTransaction = (item : any, index : number) => {
+  const completeTransaction = (item : itemSchema, index : number) => {
     console.log("Inside Complete Transaction");
-    let remainingContainerCapacityField = document.getElementById("remainingContainerCapacity_"+index);
-    let newContainerCapacity = parseInt(item.container_capacity) - parseInt(bookingContainerCapacity);
+    const remainingContainerCapacityField = document.getElementById("remainingContainerCapacity_"+index);
+    const newContainerCapacity = parseInt(item.container_capacity) - parseInt(bookingContainerCapacity);
     item["newContainerCapacity"] = newContainerCapacity;
     item["bookingAmt"] = parseInt(bookingContainerCapacity) * parseInt(item["price_in_dollars"]);
     item["bookingContainerCapacity"] = bookingContainerCapacity

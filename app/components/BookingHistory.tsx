@@ -14,11 +14,19 @@ import {
 
 import Popoverdemo from "./Popoverdemo";
   
+interface BookingRoute {
+ srcPortName: string;
+ destPortName: string;
+}
+
+interface shipDetails{
+  shipName: string;
+}
 
 interface Booking {
   _id: object;
-  bookingRoute: object,
-  shipDetails: object;
+  bookingRoute: BookingRoute,
+  shipDetails: shipDetails;
   bookedContainers: number;
   bookingAmount: number;
   paymentStatus: string;
@@ -70,13 +78,13 @@ export default function BookingHistory({ user_email }: { user_email: string }) {
             </TableHeader>
             <TableBody>
             {bookings.map((booking) => (
-                <TableRow key={booking._id}>
+                <TableRow key={booking._id.toString()}>
                   <TableCell className="p-2">
                     <span><Popoverdemo booking={booking}></Popoverdemo> </span>
                 </TableCell>
                 <TableCell className="font-medium text-left p-2">
                     <span className="font-semibold">
-                    { booking._id }
+                    { booking._id.toString() }
                         </span>
                 </TableCell>
                 <TableCell className="text-left p-2">

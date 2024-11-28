@@ -100,10 +100,14 @@ export async function POST(req: Request) {
     } finally {
       await session.endSession();
     }
-  } catch (err: string | any) {
-    console.error("Error:", err);
-    return NextResponse.json({ error: "Transaction failed", details: err.message }, { status: 500 });
-  } finally {
+  } catch (err) {
+    if (err instanceof Error) {
+        console.error(err.message); // Safely access the error message
+        return NextResponse.json({ error: "Transaction failed", details: err.message }, { status: 500 });
+    } else {
+        console.error('Unknown error:', err);
+    }
+} finally {
     if (client) {
       await client.close();
       console.log("MongoDB client connection closed");
