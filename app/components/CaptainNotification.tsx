@@ -31,11 +31,10 @@ export default function CaptainNotification({ user_email }: { user_email: string
       }, [user_email]);
   
       return (
-        <div style={{ maxHeight: '400px', overflowY: 'scroll' }}>
-            <ul>
-                
+        <div style={{ maxHeight: '400px', overflowY: 'scroll', display: 'flex', justifyContent: 'flex-end', paddingRight: '20px' }}>
+            <ul style={{ listStyleType: 'none', padding: 0 }}>
                 {captainnotification.map((notification, index) => (
-                    <li key={index}>
+                    <li key={index} style={{ margin: '10px 0', backgroundColor: '#f0f0f0', padding: '10px', borderRadius: '5px', width: '300px', textAlign: 'right' }}>
                         <strong>{notification.alerts.ship_name}</strong>: {notification.alerts.status} at {notification.alerts.timestamp}
                     </li>
                 ))}
