@@ -1,18 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import CaptainSensorPopover from "@/app/components/CaptainSensorPopover"
 
-interface Alert{
-    ship_name : string;
-    status : string;
-    system : string;
-    timestamp : string;
-    unit: number;
-    value: number; 
+
+interface SensorData {
+    ship_name: string;
+    status: string;
+    timestamp: string;
+    sensor: string;
+    action: string;
 }
 
-interface Notification{
-    alerts: Alert;
+interface Notification {
+    sensor_data: SensorData; // Updated type
     _id: Object;
 }
 
@@ -31,11 +32,14 @@ export default function CaptainNotification({ user_email }: { user_email: string
       }, [user_email]);
   
       return (
-        <div style={{ maxHeight: '400px', overflowY: 'scroll', display: 'flex', justifyContent: 'flex-end', paddingRight: '20px' }}>
+        <div style={{ maxHeight: '700px', overflowY: 'scroll', display: 'flex', justifyContent: 'flex-end', paddingRight: '20px' }}>
             <ul style={{ listStyleType: 'none', padding: 0 }}>
                 {captainnotification.map((notification, index) => (
-                    <li key={index} style={{ margin: '10px 0', backgroundColor: '#f0f0f0', padding: '10px', borderRadius: '5px', width: '300px', textAlign: 'right' }}>
-                        <strong>{notification.alerts.ship_name}</strong>: {notification.alerts.status} at {notification.alerts.timestamp}
+                    <li key={index} style={{ margin: '10px 0', backgroundColor: '#f0f0f0', padding: '10px', borderRadius: '5px', width: '300px', textAlign: 'left' }}>
+                        <strong>{notification.sensor_data.ship_name}</strong>: {notification.sensor_data.status} <br></br> 
+                        <strong>Time</strong>: {notification.sensor_data.timestamp} <br></br> 
+                        <strong>Sensor</strong>: {notification.sensor_data.sensor} <br></br> 
+                        <span><CaptainSensorPopover alerts={notification}></CaptainSensorPopover> </span>
                     </li>
                 ))}
             </ul>
