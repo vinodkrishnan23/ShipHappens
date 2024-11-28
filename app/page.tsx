@@ -6,6 +6,7 @@ import Mycard from "./components/MyCard";
 import React from "react";
 import InventorySearchForm from "@/app/components/InventorySearchForm";
 import CustomerDetails from "./components/CustomerDetails";
+import CaptainNotification from "@/app/components/CaptainNotification"
 
 export default async function Home() {
   const session = await auth();
@@ -32,6 +33,7 @@ export default async function Home() {
         <SignOut></SignOut>
       </header>
       <h2>Captain&apos;s Dashboard</h2>
+      <CaptainNotification user_email={user?.email ?? ''} />
     </div>
   )
   : 
