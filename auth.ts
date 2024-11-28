@@ -21,7 +21,10 @@ callbacks :{
     // Check if the user exists in the database
     console.log("In the callback line 21");
     const db = await getDb();
+    console.log("In the callback line 24");
     const existingUser = await db.collection('customers').findOne({ email: session.user.email });
+    console.log("In the callback line 25");
+    console.log(existingUser);
 
     if (existingUser) {
       // Add user details to the session
