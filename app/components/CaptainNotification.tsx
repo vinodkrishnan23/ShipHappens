@@ -14,7 +14,7 @@ interface SensorData {
 
 interface Notification {
     sensor_data: SensorData; // Updated type
-    _id: Object;
+    _id: object;
 }
 
 

@@ -4,8 +4,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+interface booking {
+  shipDetails: {
+    shipName: string;
+  }
+}
 
-export default function Popoverdemo({booking}:{booking: object}) {
+export default function Popoverdemo({booking}:{booking: booking}) {
 
   return (
     <Popover>
