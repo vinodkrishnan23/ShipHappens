@@ -1,15 +1,14 @@
 "use client";
 
-import React, {useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import shipImage from "../ship.png";
-import { IntegerType } from "mongodb";
 
 export default function InventorySearchForm ({ user_email }: { user_email: string }) {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [departure, setDeparture] = useState("");
-  const [inventoryData, setInventoryData] = useState<any[]>([]);
+  const [inventoryData, setInventoryData] = useState<object[]>([]);
 
   const [sourceSuggestions, setSourceSuggestions] = useState<string[]>([]);
   const [destinationSuggestions, setDestinationSuggestions] = useState<string[]>([]);

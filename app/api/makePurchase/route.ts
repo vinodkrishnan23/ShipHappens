@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { MongoClient, ObjectId } from "mongodb";
 
 // Load MongoDB connection URI from environment variables
-const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI ?? "defaultValue";
 if (!uri) {
   throw new Error("Environment variable MONGODB_URI is not defined");
 }
@@ -100,7 +100,7 @@ export async function POST(req: Request) {
     } finally {
       await session.endSession();
     }
-  } catch (err) {
+  } catch (err: string | any) {
     console.error("Error:", err);
     return NextResponse.json({ error: "Transaction failed", details: err.message }, { status: 500 });
   } finally {

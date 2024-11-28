@@ -16,9 +16,9 @@ import Popoverdemo from "./Popoverdemo";
   
 
 interface Booking {
-  _id: Object;
-  bookingRoute: Object,
-  shipDetails: Object;
+  _id: object;
+  bookingRoute: object,
+  shipDetails: object;
   bookedContainers: number;
   bookingAmount: number;
   paymentStatus: string;
@@ -72,7 +72,7 @@ export default function BookingHistory({ user_email }: { user_email: string }) {
             {bookings.map((booking) => (
                 <TableRow key={booking._id}>
                   <TableCell className="p-2">
-                    <span><Popoverdemo/> </span>
+                    <span><Popoverdemo booking={booking}></Popoverdemo> </span>
                 </TableCell>
                 <TableCell className="font-medium text-left p-2">
                     <span className="font-semibold">
