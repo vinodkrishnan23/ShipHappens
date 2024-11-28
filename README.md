@@ -92,6 +92,7 @@ Furthermore, a user can **search** on the historical bookings and track a ship t
 
 ## App Screenshots
 ![ShipHappensSSO](https://github.com/vinodkrishnan23/shiphappens/blob/main/screenshot/ShipHappensLandingSSO.png)
+![CaptainAnalytics](https://github.com/vinodkrishnan23/shiphappens/blob/main/screenshot/CaptainAnalytics.png)
 ![BookAShipContainer](https://github.com/vinodkrishnan23/shiphappens/blob/main/screenshot/BookAShipContainer.png)
 ![HistoricalShipTracking](https://github.com/vinodkrishnan23/shiphappens/blob/main/screenshot/HistoricalShipTracking.png)
 
