@@ -1,60 +1,75 @@
 
 # Details
 
-**Project** : _ShipHappens_  
+**Project** : _ShipHappens - IoT-Powered Maritime Platform_  
 **Team Number** : 8  
-**Team Name** : _May ShipHappens with You_  
+**Team Name** : _India SA 3 (May ShipHappens with You)_  
 **Demonstration Video** : _[ShipHappens](https://ship-happens-sa-ind-blr.sa-demo.staging.corp.mongodb.com)_ 
 
 # Overview
 
-_Insert Executive Overview of your application/demonstration_
-
-Shipping B2Bs struggle with sensor data analysis and real-time risk mitigation. It follows an entire trail of missed recommendations and risk analysis.
-
-and send out recommento craft personalized emails that effectively engage potential leads, resulting in lower conversion rates and wasted efforts. A lot of events, mass mails, cold calls ... and then some more!
-A lot of work goes here and a small % gets converted to decent amount of leads which are then sent to SDRs.
-The work doesn't end here.
+ShipHappens is an intelligent maritime operations platform leveraging IoT sensors, real-time data processing, and AI-driven insights to ensure efficient ship management, container bookings, and operational risk mitigation.
 
 # Justification
 
-_Please explain why you decided to build the application/demonstration for this project. What inspired you? What problems does it solve or how will it make Presales activities easier?_
-_What MongoDB competitive differentiators (developer productivity, resiliency, scalability, etc.) does this demonstration showcase?_
+The app, _ShipHappens_, addresses several key challenges in the maritime and shipping industry by leveraging IoT, real-time data processing, and AI. Here’s an overview of the challenges it solves:
 
-**MongoDB Competitive Differentiators:** \
-Developer Productivity \ 
-Unified Development \
-Scalability \
-Security \
+## Challenges
+
+- **Operational Safety Risks** - Ship captains and operators often lack real-time visibility into critical systems, making it difficult to address safety risks proactively. Delayed responses to anomalies can lead to accidents or equipment failures.
+- **Inefficient Risk Management** - Traditional approaches to risk mitigation rely on static rules or manual assessments, which are slow and less effective in dynamic conditions.
+- **Limited Data-Driven Decision Making** - Operators and managers lack the ability to leverage historical and real-time data for insights into operational trends or performance optimization.
+- **Complex Container Booking Processes** - Traditional container booking systems are cumbersome, lacking real-time inventory visibility, and often lead to overbookings or inefficiencies.
+
+## How did we solve it (with MongoDB, Duh!)
+- Real-time IoT sensor monitoring detects anomalies in ship systems (e.g., temperature, pressure, vibrations).
+- Alerts and AI-driven recommendations allow captains to take immediate action, mitigating potential risks. Notifications improve awareness and enable proactive decision-making.
+- Continuous data streaming and processing identify violations as they occur.
+- AI-powered recommendations provide actionable insights tailored to the situation.
+- Faster risk identification and mitigation reduce operational downtimes and enhance safety.
+- The platform consolidates and persists data in a TimeSeries database and MongoDB collections.
+- A streamlined container booking system(ACID Transactions, bruh!) with Full-Text Search (FTS) on ship inventories ensures real-time availability updates.
+
+## MongoDB Competitive Differentiators
+MongoDB Document Model \
+Developer Productivity  
+Unified Development Approach \
+Seamless Scalability \
+Best in Class Security \
 OOTB Analytics and Dashboards \
-Rich Querying and Indexing
+Rich Querying and Indexing _(Whoa Whoa! with FTS and Vector Search)_
 
 
 # Detailed Application Overview
 
-_Describe the architecture of your application and include a diagram.
-
 ## High Level Architecture
 ![HighLevelArch](https://github.com/vinodkrishnan23/shiphappens/blob/main/screenshot/ShipHappensArch.png)
 
-
-_List all the MongoDB components/products used in your demonstration.
-
 ## MongoDB Components
 - Atlas Search
-- Atlas Vector Search
-- TimeSeries Collections
-- OpenAI (gpt-4o)
+- Atlas Vector Search (RAG)
+- Time-Series Collections
+- Azure OpenAI (gpt-4o+text-embedding-3-large)
 - Atlas Stream Processing
 - ACID Transactions
 - Atlas Analytics Nodes
 - Atlas Charts
 - Atlas Triggers
-
+- Security SSO
 
 ## Application Functionality
 
-// Add details for how this app works
+The Captain plays a pivotal role in a ship's journey.
+Data from Ship's IoT sensors would be processed via Atlas Stream Processing and ingested in MongoDB **Time Series collections**. 
+This sensor data would be visible on the Captain's portal for **real-time** maritime functionality. 
+
+Also, the data processed from **Atlas Streams** would help in identifying anomalies, if any.
+If an anomaly or violation is detected in one of the sensorts, the app would trigger an event notification using **Atlas Triggers**.
+The notifications are sent out to Azure OpenAI to further build a polished RAG pipeline and are finally sent to the Captain.
+
+Apart from Captain, Customers have a distinct role on _ShipHappens_.
+Customers will authenticate on the app via **SSO(Single Sign On)**, look through the ship inventory data using **Atlas Search** & book a container for shipping using **ACID Transactions**. Once the booking is successful, the data would be persisted in a MongoDB Collection.
+Furthermore, a user can **search** on the historical bookings and track a ship throughout its journey.
 
 # Roles and Responsibilities
 
@@ -66,56 +81,32 @@ _List all the MongoDB components/products used in your demonstration.
 **Sandhya Dev:**  Data Generation, Analytics & ReadMe \
 **Sai Teja Boddapati:** Streaming, Analytics & Vector Search \
 **Aravind AR:** Streaming & Time-Series Backend \
-**Vinay Agarwal:** Data Gen 
+**Vinay Agarwal:** Data Gen & Vector Search
 
 
 # Demonstration Script
 
-_Demonstration script (or link to script) goes here_
+* Setup:
+  _[ShipHappens](https://ship-happens-sa-ind-blr.sa-demo.staging.corp.mongodb.com)_
+  This app is deployed on Kanopy & can be used from the link above directly
 
-_The demonstration script should provide all the information required for another MongoDB SA to deliver your demonstration to a prospect. This should include:_
-
-* _setup/installation steps_
-* _step by step instructions on how to give the demonstration_
-* _key points to emphasize at each point in the demonstration_
-* _any tear down steps required to reset the demonstration so it is ready for the next time_
-
-
+## App Screenshots
+![ShipHappensSSO](https://github.com/vinodkrishnan23/shiphappens/blob/main/screenshot/ShipHappensLandingSSO.png)
+![BookAShipContainer](https://github.com/vinodkrishnan23/shiphappens/blob/main/screenshot/BookAShipContainer.png)
+![HistoricalShipTracking](https://github.com/vinodkrishnan23/shiphappens/blob/main/screenshot/HistoricalShipTracking.png)
 
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## For local Deployments
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- GIT Clone "ShipHappens"
+- ```npm install```
+- ```npm run dev```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
-
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
