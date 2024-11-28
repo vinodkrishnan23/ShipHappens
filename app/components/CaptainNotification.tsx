@@ -2,17 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-interface Alert{
-    ship_name : string;
-    status : string;
-    system : string;
-    timestamp : string;
-    unit: number;
-    value: number; 
-}
 
 interface Notification{
-    alerts: Alert;
+    sensor_data: object;
     _id: Object;
 }
 
@@ -35,7 +27,7 @@ export default function CaptainNotification({ user_email }: { user_email: string
             <ul style={{ listStyleType: 'none', padding: 0 }}>
                 {captainnotification.map((notification, index) => (
                     <li key={index} style={{ margin: '10px 0', backgroundColor: '#f0f0f0', padding: '10px', borderRadius: '5px', width: '300px', textAlign: 'right' }}>
-                        <strong>{notification.alerts.ship_name}</strong>: {notification.alerts.status} at {notification.alerts.timestamp}
+                        <strong>{notification.sensor_data.ship_name}</strong>: {notification.sensor_data.status} at {notification.sensor_data.timestamp} (Sensor: {notification.sensor_data.sensor})
                     </li>
                 ))}
             </ul>
