@@ -12,9 +12,8 @@ export async function GET(req: Request) {
   const options = {
     limit:10
   }
+
   const bookings = await db.collection("ship_bookings").find(query,options).toArray();
-  const test=await db.collection("ship_bookings").findOne()
-  console.log(test)
 
   return NextResponse.json({ success: true,  bookings });
 }

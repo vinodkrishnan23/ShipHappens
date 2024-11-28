@@ -1,80 +1,112 @@
 import { NextResponse } from "next/server";
-import { getDb } from "@/app/lib/mongo";
-import { getClient } from "@/app/lib/mongo";
+import { MongoClient, ObjectId } from "mongodb";
 
-export async function GET(req: Request) {
-  const item : any = req.headers.get("item");
-  if(null === item){
-    return NextResponse.json({ error: "Missing parameters - 2" }, { status: 400 });
-  }
-  const { searchParams } = new URL(req.url);
-  const id = item.id;
-  const newContainerCapacity = item.newContainerCapacity;
-  const bookingAmt = item.bookingAmt;
-  const srcPortCode = item.source_port_code;
-  const srcPortName = item.source_port_name;
-  const srcCountry = item.source_country;
-  const destPortCode = item.destination_port_code;
-  const destPortName = item.destination_port_name;
-  const destCountry = item.destination_country;
-  const routeId = item.route_id;
-  const imo_number = item.imo_number;
-  const journeyEndDt = item.journey_end_date+"T"+item.destination_arrival_time+":00.000Z";
-  const journeyStDt = item.journey_start_date+"T"+item.source_departure_time+":00.000Z";
-  const mmsi_number = item.mmsi_number;
+// Load MongoDB connection URI from environment variables
+const uri = process.env.MONGODB_URI ?? "defaultValue";
+if (!uri) {
+  throw new Error("Environment variable MONGODB_URI is not defined");
+}
 
+export async function POST(req: Request) {
+  console.log("I am here in purchase route");
 
-  if (!id) {
-    return NextResponse.json({ error: "Missing parameters - 2" }, { status: 400 });
+  // Parse the request body
+  let bookingData;
+  try {
+    bookingData = await req.json();
+  } catch (err) {
+    console.error("Error parsing JSON:", err);
+    return NextResponse.json({ error: "Invalid JSON payload" }, { status: 400 });
   }
 
-  const client = getClient();
-  const db = await getDb();
-  if( null != client ){
+  // Destructure required fields
+  const {
+    user_email,
+    _id,
+    bookingContainerCapacity,
+    newContainerCapacity,
+    bookingAmt,
+    source_port_name,
+    destination_port_name,
+    ship_name,
+  } = bookingData;
+
+  // Validate input
+  if (
+    !_id ||
+    bookingContainerCapacity === undefined ||
+    newContainerCapacity === undefined ||
+    bookingAmt === undefined ||
+    user_email === undefined ||
+    !source_port_name ||
+    !destination_port_name ||
+    !ship_name
+  ) {
+    return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+  }
+
+  let client: MongoClient | null = null;
+
+  try {
+    // Manually connect to MongoDB
+    client = new MongoClient(uri);
+    await client.connect();
+    console.log("Connected to MongoDB");
+
+    const db = client.db(); // Use the default database specified in the URI
     const session = client.startSession();
 
     try {
-
+      // Perform transaction
       await session.withTransaction(async () => {
+        const inventoryColl = db.collection("inventory");
+        const shipBookingColl = db.collection("ship_bookings");
 
-      let inventoryColl = db.collection("inventory");
-      let shipBookingColl = db.collection("ship_bookings");
+        // Update inventory collection
+        const inventoryCollFilter = { _id: new ObjectId(_id) };
+        const inventoryCollUpdate = { $set: { container_capacity: newContainerCapacity } };
+        const inventoryUpdateResult = await inventoryColl.updateOne(
+          inventoryCollFilter,
+          inventoryCollUpdate,
+          { session }
+        );
 
-      let inventoryCollFilter = {"_id" : {$oid: id}};
-      let inventoryCollUpdate = { $set: {container_capacity: newContainerCapacity}};
-
-      await inventoryColl.updateOne(inventoryCollFilter,inventoryCollUpdate);
-
-      await shipBookingColl.insertOne({
-        bookingAmt : bookingAmt,
-        bookingRoute: {
-          srcPortCode : srcPortCode,
-          srcPortName : srcPortName,
-          srcCountry : srcCountry,
-          destPortCode : destPortCode,
-          destPortName : destPortName,
-          destCountry : destCountry,
-          routeId : routeId
-        },
-        imo_number : imo_number,
-        journeyEndDt : {"$date" : journeyEndDt},
-        journeyStDt : {"$date" : journeyStDt},
-        mmsi_number : mmsi_number,
-        payment_status : "SUCCESS",
-        shipDetails : {
-
+        if (inventoryUpdateResult.matchedCount === 0) {
+          throw new Error("Inventory item not found or already updated");
         }
+
+        // Insert new booking in ship_bookings collection
+        await shipBookingColl.insertOne(
+          {
+            tripId: new ObjectId(_id),
+            bookingRoute: {
+              srcPortName: source_port_name,
+              destPortName: destination_port_name,
+            },
+            bookedContainers: bookingContainerCapacity,
+            bookingAmount: bookingAmt,
+            paymentStatus: "SUCCESS",
+            shipDetails: {
+              shipName: ship_name,
+            },
+            created_at: new Date().toISOString(),
+            userId: user_email
+          },
+          { session }
+        );
       });
 
-      });
-
-    } catch (e) {
-      console.log("Error in transaction");
-      console.log(e);
+      return NextResponse.json({ success: true, message: "Transaction completed successfully" });
     } finally {
       await session.endSession();
     }
-
+  } catch (err: string | any) {
+    console.error("Error:", err);
+    return NextResponse.json({ error: "Transaction failed", details: err.message }, { status: 500 });
+  } finally {
+    if (client) {
+      await client.close();
+      console.log("MongoDB client connection closed");
+    }
   }
-  return NextResponse.json({ success: true});
 }

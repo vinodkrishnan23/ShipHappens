@@ -15,7 +15,7 @@ export async function GET(req: Request) {
     .aggregate([
       {
         $search: {
-          index: "inventory_dst",
+          index: "invectory_src",
           compound: {
             should: [
               {
