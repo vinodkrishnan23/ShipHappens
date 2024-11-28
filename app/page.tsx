@@ -32,8 +32,29 @@ export default async function Home() {
         </h1>
         <SignOut></SignOut>
       </header>
+      
       <h2>Captain&apos;s Dashboard</h2>
-      <CaptainNotification user_email={user?.email ?? ''} />
+      <div className="flex">
+        <div className="mr-4"> {/* Added margin to the right for spacing */}
+          <CaptainNotification user_email={user?.email ?? ''} />
+        </div>
+        
+        <div>
+          <iframe 
+          style={{ 
+            background: '#F1F5F4', 
+            border: 'none', 
+            borderRadius: '2px', 
+            boxShadow: '0 2px 10px 0 rgba(70, 76, 79, .2)', 
+            width: '100vw', 
+            height: '100vh' 
+          }}  
+          src="https://charts.mongodb.com/charts-apac-ind-blr-hackathon-zucicuu/embed/dashboards?id=67482361-a115-46ff-8132-e7c0aac82c4a&theme=light&autoRefresh=true&maxDataAge=3600&showTitleAndDesc=false&scalingWidth=fixed&scalingHeight=fixed">
+          </iframe>
+        </div>
+      </div>
+
+      
     </div>
   )
   : 
