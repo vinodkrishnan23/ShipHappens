@@ -11,6 +11,8 @@ import {
     TableRow,
   } from "@/components/ui/table"
   import { Badge } from "@/components/ui/badge"
+
+import Popoverdemo from "./Popoverdemo";
   
 
 interface Booking {
@@ -56,6 +58,7 @@ export default function BookingHistory({ user_email }: { user_email: string }) {
             <TableCaption>Your Bookings with us</TableCaption>
             <TableHeader>
                 <TableRow>
+                <TableHead className="p-2"></TableHead>
                 <TableHead className="p-2">Booking ID</TableHead>
                 <TableHead className="p-2">Source Port</TableHead>
                 <TableHead className="p-2">Destination Port</TableHead>
@@ -68,6 +71,9 @@ export default function BookingHistory({ user_email }: { user_email: string }) {
             <TableBody>
             {bookings.map((booking) => (
                 <TableRow key={booking._id}>
+                  <TableCell className="p-2">
+                    <span><Popoverdemo/> </span>
+                </TableCell>
                 <TableCell className="font-medium text-left p-2">
                     <span className="font-semibold">
                     { booking._id }

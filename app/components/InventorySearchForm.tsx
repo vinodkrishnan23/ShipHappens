@@ -5,7 +5,7 @@ import Image from "next/image";
 import shipImage from "../ship.png";
 import { IntegerType } from "mongodb";
 
-const InventorySearchForm: React.FC = () => {
+export default function InventorySearchForm ({ user_email }: { user_email: string }) {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [departure, setDeparture] = useState("");
@@ -16,6 +16,8 @@ const InventorySearchForm: React.FC = () => {
   
   const [bookingItem, setBookingItem] = useState<any>({});
   const [bookingContainerCapacity, setBookingContainerCapacity] = useState("0");
+
+  const [transactionComplete, setTransactionComplete] = useState(false);
 
   const filterSourceSuggestions = (input: string, setSuggestions: React.Dispatch<React.SetStateAction<string[]>>) => {
     console.log("Source Entered: "+{ input });
@@ -112,12 +114,20 @@ const InventorySearchForm: React.FC = () => {
     console.log(inventoryData);
   };
 
+  function sleepSync(ms: number) {
+    const end = Date.now() + ms;
+    while (Date.now() < end) {
+      // Busy wait
+    }
+  };  
+
   const showBookingSection = (id : any) => {
     let booking = {"row": ""}; 
     if(bookingItem["row"] != id){
       booking = {"row" : id}
     }
     setBookingItem(booking);
+    setTransactionComplete(false);
     console.log(booking);
   };
 
@@ -127,6 +137,28 @@ const InventorySearchForm: React.FC = () => {
     let newContainerCapacity = parseInt(item.container_capacity) - parseInt(bookingContainerCapacity);
     item["newContainerCapacity"] = newContainerCapacity;
     item["bookingAmt"] = parseInt(bookingContainerCapacity) * parseInt(item["price_in_dollars"]);
+    item["bookingContainerCapacity"] = bookingContainerCapacity
+    item["user_email"]= user_email
+    console.log(JSON.stringify(item))
+    async function completePurchase() {
+      await fetch("/api/makePurchase", 
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(item)
+        }
+      );
+      
+
+    }
+    try {
+      completePurchase();
+    }
+    catch (err) {
+      console.error("Error:", err);
+    } 
+
+    
 
     /*async function completePurchase() {
       console.log("---Complete Purchase 1---")
@@ -143,6 +175,7 @@ const InventorySearchForm: React.FC = () => {
       }
     }
     completePurchase();*/
+    setTransactionComplete(true);
 
     if (null !== remainingContainerCapacityField){
       remainingContainerCapacityField.innerHTML= "<b>"+newContainerCapacity.toString()+"</b>";
@@ -339,15 +372,25 @@ const InventorySearchForm: React.FC = () => {
               <p className="text-sm text-gray-700">&nbsp;&nbsp;<b>{bookingContainerCapacity==""?"$ 0": "$ "+parseInt(bookingContainerCapacity)*parseInt(item.price_in_dollars)}</b></p>
             </div>
 
-            {/* Pay Now Button */}
-            <div className="flex flex-col w-1/4">
-              <button
-                className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-800 transition duration-200"
-                onClick={() => completeTransaction(item,index)}
-              >
-                <b>Pay Now</b>
-              </button>
-            </div>
+            
+              {/* Conditionally render the "Pay Now" button or the "Booking Accomplished" banner */}
+      {!transactionComplete ? (
+        <div className="flex flex-col w-1/4">
+        <button
+          className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-800 transition duration-200"
+          onClick={() => completeTransaction(item,index)}
+        >
+          <b>Pay Now</b>
+        </button>
+      </div>
+      ):
+      (
+        <div className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-800 transition duration-200">
+          <b>Booking Accomplished</b>
+        </div>
+      )
+      }
+            
           </div>
         )}
         </div>
@@ -359,4 +402,3 @@ const InventorySearchForm: React.FC = () => {
 );
 };
 
-export default InventorySearchForm;

@@ -48,7 +48,7 @@ export default async function Home() {
               <GiPirateHat size={30}/>
               Ship Happens !!!
             </h1>
-            <Mycard user_name={user?.name ?? "User"}/>
+            <Mycard user_name={user?.name ?? "User"} user_url={user?.image ?? "User"}/>
           </header>
           <CustomerDetails 
             user_email={user?.email ?? ""} 
@@ -65,9 +65,9 @@ export default async function Home() {
               <GiPirateHat size={30}/>
               Ship Happens !!!
             </h1>
-            <Mycard user_name={user?.name ?? "User"}/>
+            <Mycard user_name={user?.name ?? "User"} user_url={user?.image ?? "User"}/>
           </header>
-          <InventorySearchForm />
+          <InventorySearchForm user_email={user?.email ?? ""}/>
 
         </div>
       )
@@ -77,8 +77,9 @@ export default async function Home() {
   //part 2
   (
     <div className="flex flex-col justify-center text-center gap-6 max-w-5xl mx-auto items-center h-screen">
-    <h1 className="flex text-3xl font-bold">
-      <GiPirateHat size={30}/>
+      <GiPirateHat size={100}/>
+    <h1 className="flex text-5xl font-bold">
+      
       Ship Happens !!!
     </h1>
     <SignIn></SignIn>
